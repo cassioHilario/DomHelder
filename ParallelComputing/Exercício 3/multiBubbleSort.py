@@ -3,17 +3,11 @@ from threading import Thread
 from time import perf_counter
 from random import randint
 
-def paralelSort(lista, posicao=0):
-    if(posicao < len(lista)):
-        if lista[posicao] > lista[posicao+1]:
-            oldNum = lista[posicao]
-            lista[posicao] = lista[posicao+1]
-            lista[posicao+1] = oldNum
-            return paralelSort(lista, posicao+1)
-        else:
-            return paralelSort(lista, posicao+1)
-    else: 
-        return lista
+def paralelSort(lista):
+    for i in range(len(lista)):
+        for j in range(0, len(lista) - i - 1):
+            if lista[j] > lista[j + 1]:
+                lista[j], lista[j+1] = lista[j+1], lista[j]
 
 
 if __name__ == '__main__':
@@ -30,10 +24,11 @@ if __name__ == '__main__':
     for i in range (limite):
         lista.append(randint(1, limite))
         
+    print ('Lista Original: ', str(lista))
     start_time = perf_counter()
     
     
-    for numero in range(lista):
+    for numero in lista:
         if numero <= controle:
             lista1.append(numero)
         elif numero > controle and numero <= controle*2:
@@ -47,20 +42,22 @@ if __name__ == '__main__':
     lista = []
     threads = []
     
-    for list in listas:
-        t = Thread(target=paralelSort, args=(list))
+    for l in listas:
+        paralelSort(l)
+        lista.append(l)
+    
+    for l in listas:
+        t = Thread(target=paralelSort, args=(l))
         threads.append(t)
         t.start()
-        lista += list
+        lista.extend(l)
         
     for t in threads:
         t.join()
         
+        
     
-    
-    print ('Lista Original: ', str(lista))
-    
-    print('Lista ordenada: ', str(lista))
+    print('Lista ordenada: ', lista)
     
     end_time = perf_counter()
     
