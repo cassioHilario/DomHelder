@@ -1,4 +1,3 @@
-sudo su
 yum -y update
 yum install java-1.8.0-openjdk
 wget https://downloads.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
@@ -64,7 +63,7 @@ sed -i 's/export KAFKA_HEAP_OPTS="-Xmx1G -Xms1G"/export KAFKA_HEAP_OPTS="-Xmx512
 systemctl start zookeeper
 systemctl start kafka
 
-sleep 2000
+sleep 5
 
  # Checking status of zookeeper and kafka services
 systemctl status zookeeper
