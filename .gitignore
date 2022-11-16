@@ -1,3 +1,6 @@
 *.xls*
 *.csv
 *.pdf
+venv/
+kafka_2.13-3.3.1/
+*tgz
